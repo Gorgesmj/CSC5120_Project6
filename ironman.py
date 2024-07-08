@@ -37,7 +37,7 @@ class IronMan(Character):
                 damage = self.d10.roll() + self.d10.roll()
                 if self.suitCharged == 1:
                     damage = damage * 2
-                    self.hitPoints = 0
+                    self.suitCharged = 0
                 print(f"{self.name}(IronMan) hits with hand blaster for {damage}")
             else:
                 print(f"{self.name}(IronMan) misses with hand blaster")
@@ -47,7 +47,7 @@ class IronMan(Character):
                 damage = self.d10.roll() + self.d10.roll() + self.d10.roll()  # 3d10
                 if self.suitCharged == 1:
                     damage = damage * 2
-                    self.hitPoints = 0
+                    self.suitCharged = 0
                 print(f"{self.name}(IronMan) hits with laser for {damage}")
             else:
                 print(f"{self.name}(IronMan) misses with laser")
@@ -62,7 +62,21 @@ class IronMan(Character):
 
         return damage
 
+    def takeDamage(self, damage: int):
+        final_damage = damage
+        if self.suitCharged ==1:
+            final_damage = final_damage //2
+
+        super().takeDamage(final_damage)
 
 # test
 x = IronMan(True)
+print(f"Begin HP: {x.hitPoints}"  )
 x.attack()
+x.takeDamage(10)
+print(x.hitPoints)
+#
+damage = x.attack()
+print(damage)
+
+print(x.hitPoints)
