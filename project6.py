@@ -179,13 +179,13 @@ def report(p1, p2):  # not testable
 def initiative() -> int:  # return 1 for warrior, 2 for mugwump
     # roll for initiative for both combatants
     # until one initiative is greater than the other
-    warrior_initiative = d10.roll()
-    mugwump_inititive = d10.roll()
-    while (warrior_initiative == mugwump_inititive):
-        warrior_initiative = d10.roll()
-        mugwump_inititive = d10.roll()
+    player1_initiative = d10.roll()
+    player2_initiative = d10.roll()
+    while (player1_initiative == player2_initiative):
+        player1_initiative = d10.roll()
+        player2_initiative = d10.roll()
 
-    if (warrior_initiative > mugwump_inititive):
+    if (player1_initiative > player2_initiative):
         return 1  # warrior goes first
     else:
         return 2  # mugwump goes first
