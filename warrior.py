@@ -17,7 +17,8 @@ class Warrior(Character):
         # roll attack die
         # determine results of attack
         if (self.isPlayer):
-            # TODO
+
+
             print("Please select your attack type: ")
             print("1 for hit with sword")
             print("2 for hit with shield of light")

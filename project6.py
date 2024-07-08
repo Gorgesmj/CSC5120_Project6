@@ -55,7 +55,7 @@ def main():  # not testable
 
 def intro():  # not testable
     # Write a suitable introduction to the game
-    # TODO change the description
+
     print("Welcome to Battle Simulator 4000! The world's more low tech battle simulator!"
           "You can select to be a Valiant Warrior defending your humble village from an evil Mugwump! Fight bravely, "
           "or you can be the evil Mugwump to destroy a village "
@@ -121,7 +121,7 @@ def battle(player1, player2):  # not testable?
         if (player1.hitPoints == 0):
             return "player2"  #P2 wins!
     else:  # P2 attacks first!
-        # TODO  change the description
+
 
         print(f"Player 2 ({player2.name}) attacks first!")
         # P2 attacks and assigns the resulting damage to the P1
