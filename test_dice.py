@@ -5,3 +5,4 @@ def test_roll():
     assert (value>0 and value<=6)
     assert value==d6.get_current_value()
 
+

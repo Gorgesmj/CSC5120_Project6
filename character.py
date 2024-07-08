@@ -17,6 +17,7 @@ class Character:
 
     def getHitPoints(self):
         return self.hitPoints
+    
 
     def takeDamage(self, damage: int):
         if self.hitPoints >= damage:

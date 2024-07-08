@@ -19,6 +19,7 @@ class Warrior(Character):
         if (self.isPlayer):
 
 
+
             print("Please select your attack type: ")
             print("1 for hit with sword")
             print("2 for hit with shield of light")

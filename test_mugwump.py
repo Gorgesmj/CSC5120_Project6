@@ -13,6 +13,7 @@ def ai_mug():
     return ai_mug
 
 
+
 @pytest.fixture
 def player_mug():
     player_mug = Mugwump(True)

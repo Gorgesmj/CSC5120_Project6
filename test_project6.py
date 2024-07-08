@@ -24,6 +24,7 @@ def test_initiative():
     assert 0 < output and output < 3
 
 
+
 def test_play_again():
     with mock.patch.object(builtins, 'input', lambda _: 'Y'):
         assert battleSim.playAgain() == True

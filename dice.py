@@ -23,6 +23,7 @@ class Die:
         self.currentValue = self.roll()
 
 
+
     def get_current_value(self) -> int:
         return self.currentValue
         # return the current value

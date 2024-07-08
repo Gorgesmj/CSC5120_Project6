@@ -123,6 +123,9 @@ def battle(player1, player2):  # not testable?
     else:  # P2 attacks first!
 
 
+
+
+
         print(f"Player 2 ({player2.name}) attacks first!")
         # P2 attacks and assigns the resulting damage to the P1
         damage = player2.attack()
