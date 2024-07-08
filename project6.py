@@ -104,7 +104,7 @@ def battle(player1, player2):  # not testable?
     cur_inititive = initiative()  # this a 1 or 2
     # attack code
     # If the Warrior attacks first
-    if (cur_inititive == 1):
+    if cur_inititive == 1:
         # P1 attacks and assigns the resulting damage to the P2
 
         print(f"The Player 1 ({player1.name})attacks first!")
