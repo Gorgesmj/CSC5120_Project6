@@ -64,19 +64,21 @@ class IronMan(Character):
 
     def takeDamage(self, damage: int):
         final_damage = damage
-        if self.suitCharged ==1:
-            final_damage = final_damage //2
+        if self.suitCharged == 1:
+            final_damage = final_damage // 2
 
         super().takeDamage(final_damage)
 
+
 # test
 x = IronMan(True)
-print(f"Begin HP: {x.hitPoints}"  )
+print(f"Begin HP: {x.hitPoints}")
 x.attack()
 x.takeDamage(10)
 print(x.hitPoints)
 #
 damage = x.attack()
-print(damage)
-
 print(x.hitPoints)
+print(x.outputData())
+print(x.loadData("Genius",15,20))
+print(x.outputData())

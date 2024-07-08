@@ -52,3 +52,11 @@ class Character:
 
     def setName(self,message:str):
         self.name = input(message)
+
+    def loadData(self, name:str, currentHP:int, maxHP: int):
+        self.name = name
+        self.hitPoints = currentHP
+        self.maxHitPoints = maxHP
+
+    def outputData(self):
+        return self.name, self.isPlayer,self.hitPoints,self.maxHitPoints
