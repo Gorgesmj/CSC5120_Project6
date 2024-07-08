@@ -53,6 +53,7 @@ class IronMan(Character):
                 print(f"{self.name}(IronMan) misses with laser")
         elif attack_type == 3:
             self.suitCharged = 1
+            print(f"{self.name}(IronMan) suit charged")
             damage = 0
 
         else:  # Heal
@@ -60,3 +61,8 @@ class IronMan(Character):
             print(f"{self.name}(IronMan) heals for {-1 * damage}")
 
         return damage
+
+
+# test
+x = IronMan(True)
+x.attack()
