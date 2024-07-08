@@ -181,11 +181,11 @@ def initiative() -> int:  # return 1 for warrior, 2 for mugwump
     # until one initiative is greater than the other
     player1_initiative = d10.roll()
     player2_initiative = d10.roll()
-    while (player1_initiative == player2_initiative):
+    while player1_initiative == player2_initiative:
         player1_initiative = d10.roll()
         player2_initiative = d10.roll()
 
-    if (player1_initiative > player2_initiative):
+    if player1_initiative > player2_initiative:
         return 1  # warrior goes first
     else:
         return 2  # mugwump goes first
