@@ -17,7 +17,7 @@ class Character:
 
     def getHitPoints(self):
         return self.hitPoints
-    
+
 
     def takeDamage(self, damage: int):
         if self.hitPoints >= damage:
@@ -49,3 +49,6 @@ class Character:
             # heal 15%
             attack_type = 3
         return attack_type
+
+    def setName(self,message:str):
+        self.name = input(message)

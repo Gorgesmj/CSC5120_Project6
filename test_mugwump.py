@@ -52,3 +52,4 @@ def test_take_damage(ai_mug):
 def test_ai_or_player(ai_mug, player_mug):
     assert player_mug.isPlayer
     assert ai_mug.isPlayer == False
+

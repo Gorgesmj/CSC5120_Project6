@@ -34,28 +34,30 @@ class Mugwump(Character):
 
         damage = 0
 
-        if attack_type == 1:
+        if attack_type == 1: # first attack
             if self.d20.roll() >= 13:
                 damage = self.d6.roll() + self.d6.roll()
-                print(f"Mugwump hits with claws for {damage}")
+                print(f"{self.name}(Mugwump) hits with claws for {damage}")
             else:
-                print("Mugwump misses with claws")
+                print(f"{self.name}(Mugwump) misses with claws")
 
-        elif attack_type == 2:
+        elif attack_type == 2:  # second attack
             if self.d20.roll() >= 16:
                 damage = self.d6.roll() + self.d6.roll() + self.d6.roll()  # 3d6
-                print(f"Mugwump hits with fangs for {damage}")
+                print(f"{self.name}(Mugwump) hits with fangs for {damage}")
             else:
-                print(f"Mugwump misses with fangs")
+                print(f"{self.name}(Mugwump) misses with fangs")
 
-        else:
+        else: # Heal
             damage = -1 * self.d6.roll()
-            print(f"Mugwump heals for {-1 * damage}")
+            print(f"{self.name}(Mugwump) heals for {-1 * damage}")
 
         return damage
 
-# testing
+# # testing
 # x = Mugwump(1)
 # print (x)
 # x.attack()
+# x.setName()
+# print(x.name)
 

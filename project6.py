@@ -14,6 +14,7 @@ class Player():
     def __init__(self, char: int = 1, is_player: bool = True):
         self.char = char
         self.is_player = is_player
+        self.name = None
 
 
 def main():  # not testable
@@ -27,9 +28,11 @@ def main():  # not testable
         # change to player1 and player2, we ask the user what is what
         player_1 = Player()
         player_2 = Player()
-        setUp(player_1, player_2)
+        # the set up function will ask the users to select which player do they want to be and which one is the ai or
+        # real player
+        setUpNewGame(player_1, player_2)
         if player_1.char == 1:
-            player1 = Warrior(player_1.is_player)
+            player1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
         else:
             player1 = Mugwump(player_1.is_player)
 
@@ -37,6 +40,8 @@ def main():  # not testable
             player2 = Warrior(player_2.is_player)
         else:
             player2 = Mugwump(player_2.is_player)
+        player1.setName("Please set a name for player 1: ")
+        player2.setName("Please set a name for player 2: ")
 
         victor = "none"
 
@@ -67,7 +72,7 @@ def intro():  # not testable
           "\nLet the epic battle begin!")
 
 
-def setUp(player1: Player, player2: Player):
+def setUpNewGame(player1: Player, player2: Player):
     print("Please make the selection for player 1 " "\n 1 for Warrior and 2 for Mugwump" "\n Default is Warrior")
     char1 = int(input())
     if char1 > 2 or char1 < 1:
@@ -125,10 +130,6 @@ def battle(player1, player2):  # not testable?
             return "player2"  #P2 wins!
     else:  # P2 attacks first!
 
-
-
-
-
         print(f"Player 2 ({player2.name}) attacks first!")
         # P2 attacks and assigns the resulting damage to the P1
         damage = player2.attack()
@@ -163,8 +164,8 @@ def battle(player1, player2):  # not testable?
 
 
 def report(p1, p2):  # not testable
-    print(f"Player 1 HP: {p1}")
-    print(f"Plater 2 HP: {p2}")
+    print(f"Player 1 {p1}")
+    print(f"Plater 2 {p2}")
 
 
 """
