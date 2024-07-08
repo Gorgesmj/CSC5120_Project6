@@ -30,7 +30,8 @@ class Die:
 
     def roll(self):
         # roll the die
-        return random.randint(1, self.sides)
+        self.currentValue = random.randint(1, self.sides)
+        return self.currentValue
 
 # # Testing Codes
 # x = Die(10)

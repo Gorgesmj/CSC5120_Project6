@@ -16,7 +16,7 @@ class Warrior(Character):
         # unlike mugwump, warrior's attack type is passed in as a parameter.
         # roll attack die
         # determine results of attack
-        if (self.isPlayer):
+        if self.isPlayer:
 
 
 

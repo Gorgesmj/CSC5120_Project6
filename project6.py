@@ -105,12 +105,15 @@ def battle(player1, player2):  # not testable?
         print(f"The Player 1 ({player1.name})attacks first!")
 
         damage = player1.attack()  #calculate damage caused by P1
+        if (damage > 0):
+            player2.takeDamage(damage)  # apply damage to P2
+        else:  # the P1 may have healed itself, so have to check
+            player1.takeDamage(damage)  #healing because it is negative
 
-        player2.takeDamage(damage)  # apply damage to P2
         # Check if the P2 has been defeated
         if (player2.hitPoints <= 0):
             return "player1"
-        # If not, Mugwump attacks!
+        # If not, player2 attacks!
         damage = player2.attack()
         # the P2 may have healed itself, so have to check
         if (damage > 0):
@@ -139,8 +142,11 @@ def battle(player1, player2):  # not testable?
             return "mugwump"  # P2 wins!
 
         damage = player1.attack()  # calculate damage caused by P1
+        if (damage > 0):
+            player2.takeDamage(damage)  # apply damage to P2
+        else:  # the P1 may have healed itself, so have to check
+            player1.takeDamage(damage)  #healing because it is negative
 
-        player2.takeDamage(damage)  # apply damage to P2
         # Check if the P2 has been defeated
         if (player2.hitPoints <= 0):
             return "player2"
