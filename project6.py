@@ -1,10 +1,13 @@
-# Project 4
-# Author: Geoffrey Tan
-# Date: 6/24/2024
-# Create a game Battle Sim
+# Project 6
+# Author: Geoffrey Tan, Michael Gorges, Chris Troop
+# Date:
+# group project
 
 from mugwump import Mugwump
 from warrior import Warrior
+from ironman import IronMan
+#from michaelNewChar import NewChar - MICHAEL UPDATE
+from spooderman import spooderman
 from dice import Die
 import csv
 import pandas as pd
@@ -14,8 +17,8 @@ d10 = Die(10)
 c1Name = "Mugwump"
 c2Name = "Warrior"
 c3Name = "IronMan"
-c4Name = "michaelNewChar"
-c5Name = "chrisNewChar"
+c4Name = "michaelNewChar" #MICHAEL UPDATE
+c5Name = "spooderman"
 
 class Player():
     def __init__(self, char: int = 1, is_player: bool = True):
@@ -42,11 +45,23 @@ def main():  # not testable
             setUpNewGame(player_1, player_2)
             if player_1.char == 1:
                 player1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
+            elif player_1.char == 2:
+                player1 = IronMan(player_1.is_player)
+            #elif player_1.char == 3:
+                #player1 = michaelNewChar(player_1.is_player) MICHAEL UPDATE
+            elif player_1.char == 4:
+                player1 = spooderman(player_1.is_player)
             else:
                 player1 = Mugwump(player_1.is_player)
 
             if player_2.char == 1:
                 player2 = Warrior(player_2.is_player)
+            elif player_2.char == 2:
+                player2 = IronMan(player_2.is_player)
+            #elif player_2.char == 3:
+                #player2 = michaelNewChar(player_2.is_player) MICHAEL UPDATE
+            elif player_2.char == 4:
+                player2 = spooderman(player_2.is_player)
             else:
                 player2 = Mugwump(player_2.is_player)
             player1.setName("Please set a name for player 1: ")
@@ -93,11 +108,13 @@ def intro():  # not testable
 
     print("Welcome to Battle Simulator 4000! The world's more low tech battle simulator!"
           "You can select to be a Valiant Warrior defending your humble village from an evil Mugwump! Fight bravely, "
-          "or you can be the evil Mugwump to destroy a village "
+          "or you can be the evil Mugwump to destroy a village"
+          "new to this version, you can play as spooderman a meme anti-hero that bullies his opponents "
           "\n The warrior has a Trusty Sword, which deals decent damage, but can be tough to hit with sometimes. "
           "The warrior also has a Shield of Light, which is not as strong as your sword, but is easier to deal "
           "damage with."
-          "\n the Mugwump also have 2 damage skills as well with one additional healing skill "
+          "\n the Mugwump also has 2 damage skills as well with one additional healing skill "
+          "\n spooder man has 2 attacks, a charge up, and heal function"
           "\n this game support both PvP and PvE and EvE"
           "\nLet the epic battle begin!")
 
@@ -241,7 +258,7 @@ def victory(victor):  # not testable (or at least we won't worry about testing i
     if (victor == "player1"):
         print("Player 1 win ")
     else:
-        print("Plater 2 win")
+        print("Player 2 win")
 
 
 """
