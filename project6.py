@@ -37,18 +37,22 @@ def main():  # not testable
         player_2 = Player()
         # the set up function will ask the users to select which player do they want to be and which one is the ai or
         # real player
-        setUpNewGame(player_1, player_2)
-        if player_1.char == 1:
-            player1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
-        else:
-            player1 = Mugwump(player_1.is_player)
+        startANewGame = newGameAsk()
+        if startANewGame:
+            setUpNewGame(player_1, player_2)
+            if player_1.char == 1:
+                player1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
+            else:
+                player1 = Mugwump(player_1.is_player)
 
-        if player_2.char == 1:
-            player2 = Warrior(player_2.is_player)
+            if player_2.char == 1:
+                player2 = Warrior(player_2.is_player)
+            else:
+                player2 = Mugwump(player_2.is_player)
+            player1.setName("Please set a name for player 1: ")
+            player2.setName("Please set a name for player 2: ")
         else:
-            player2 = Mugwump(player_2.is_player)
-        player1.setName("Please set a name for player 1: ")
-        player2.setName("Please set a name for player 2: ")
+            print("Load data from previous game")
 
         victor = "none"
 
@@ -260,6 +264,11 @@ def pauseAndSave() -> bool:
         return True
     return False
 
+def newGameAsk() -> bool:  # this should be testable, see https://stackoverflow.com/questions/35851323/how-to-test-a-function-with-input-call
+    choice = input("Do you want to start a new game (yes/no)?")
+    if str.lower(choice) == "y" or str.lower(choice) == "yes":
+        return True
+    return False
 
 if __name__ == "__main__":
     main()
