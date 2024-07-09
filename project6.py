@@ -43,10 +43,12 @@ def main():  # not testable
         # the set up function will ask the users to select which player do they want to be and which one is the ai or
         # real player
         startANewGame = newGameAsk()
+        # creating two object
+
         if startANewGame:
             setUpNewGame(player_1, player_2)
-            print(player_1.chara_choose)
-            print(player_2.chara_choose)
+            # print(player_1.chara_choose) # use for debug only
+            # print(player_2.chara_choose) # use for debug only
             p1 = chooseChar(player_1)
             p2 = chooseChar(player_2)
             # if player_1.chara_choose == 1:
@@ -64,13 +66,35 @@ def main():  # not testable
             player_1.nickName = p2.name
         else:
             print("Load data from previous game")
+            csv_file_path = './gamingData.csv'
+            loadedData = pd.read_csv(csv_file_path)
+            p1data = loadedData.iloc[0]
+            p2data = loadedData.iloc[1]
+            player_1.className = p1data.iloc[0]
+            player_1.chara_choose = p1data.iloc[1]
+            player_1.nickName = p1data.iloc[2]
+            player_1.is_player= p1data.iloc[3]
+            p1 = chooseChar(player_1)
+            p1.loadData(player_1.nickName,p1data.iloc[4], p1data.iloc[5])
+
+            player_2.className = p2data.iloc[0]
+            player_2.chara_choose = p2data.iloc[1]
+            player_2.nickName = p2data.iloc[2]
+            player_2.is_player = p2data.iloc[3]
+            p2 = chooseChar(player_2)
+            p2.loadData(player_2.nickName, p2data.iloc[4], p2data.iloc[5])
+
+
+
+
+
 
         victor = "none"
 
         while victor == "none" and keep_playing == True:
             report(p1, p2)
             victor = battle(p1, p2)
-            report(p1, p2)
+
 
             if victor != "none":  # one of them has won
                 report(p1, p2)
@@ -86,11 +110,13 @@ def main():  # not testable
                     playerName1, isRealPlayer1, player1_currentHP, player1_maxHP = p1.outputData()
                     playerName2, isRealPlayer2, player2_currentHP, player2_maxHP = p2.outputData()
                     player1Class = player_1.className
-                    player2Class = player_1.className
+                    player2Class = player_2.className
+                    player1Index = player_1.chara_choose
+                    player2Index = player_2.chara_choose
                     # format the data
-                    dataMessages = [[player1Class, playerName1, isRealPlayer1, player1_currentHP, player1_maxHP],
-                                    [player2Class, playerName2, isRealPlayer2, player2_currentHP, player2_maxHP]]
-                    columns = ["Class Name", "Player Name", "Real Player ?", "Current HP", "Max HP"]
+                    dataMessages = [[player1Class, player1Index,playerName1, isRealPlayer1, player1_currentHP, player1_maxHP],
+                                    [player2Class, player2Index,playerName2, isRealPlayer2, player2_currentHP, player2_maxHP]]
+                    columns = ["Class Name","Class index","Player Name", "Real Player ?", "Current HP", "Max HP"]
 
                     df = pd.DataFrame(dataMessages, columns=columns)
                     csv_file_path = './gamingData.csv'
