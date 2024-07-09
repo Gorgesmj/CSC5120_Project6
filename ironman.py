@@ -60,14 +60,14 @@ class IronMan(Character):
             damage = 0
 
         else:  # Heal
-            damage = -1 * self.d6.roll()
+            damage = -1 * self.d10.roll()
             print(f"{self.name}(IronMan) heals for {-1 * damage}")
 
         return damage
 
     def takeDamage(self, damage: int):
         final_damage = damage
-        if self.suitCharged == 1:
+        if self.suitCharged == 1 and damage<0:
             final_damage = final_damage // 2
 
         super().takeDamage(final_damage)
@@ -93,14 +93,14 @@ class IronMan(Character):
 
 
 # test
-x = IronMan(True)
-print(f"Begin HP: {x.hitPoints}")
-x.attack()
-x.takeDamage(10)
-print(x.hitPoints)
-#
-damage = x.attack()
-print(x.hitPoints)
-print(x.outputData())
-print(x.loadData("Genius", 15, 20))
-print(x.outputData())
+# x = IronMan(True)
+# print(f"Begin HP: {x.hitPoints}")
+# x.attack()
+# x.takeDamage(10)
+# print(x.hitPoints)
+# #
+# damage = x.attack()
+# print(x.hitPoints)
+# print(x.outputData())
+# print(x.loadData("Genius", 15, 20))
+# print(x.outputData())
