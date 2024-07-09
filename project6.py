@@ -6,9 +6,16 @@
 from mugwump import Mugwump
 from warrior import Warrior
 from dice import Die
+import csv
+import pandas as pd
 
 d10 = Die(10)
-
+# : Please change the name at here
+c1Name = "Mugwump"
+c2Name = "Warrior"
+c3Name = "IronMan"
+c4Name = "michaelNewChar"
+c5Name = "chrisNewChar"
 
 class Player():
     def __init__(self, char: int = 1, is_player: bool = True):
@@ -45,15 +52,34 @@ def main():  # not testable
 
         victor = "none"
 
-        while victor == "none":
+        while victor == "none" and keep_playing == True:
             report(player1, player2)
             victor = battle(player1, player2)
 
-            if (victor != "none"):  # one of them has won
+            if victor != "none":  # one of them has won
                 report(player1, player2)
                 victory(victor)
                 # ask to play again
                 keep_playing = playAgain()
+            else:
+                # ask do they want to continue play or store it as CSV
+                pauseSave = pauseAndSave()
+                if pauseSave:
+                    # get the data from the class and output it as CSV
+                    playerName1, isRealPlayer1, player1_currentHP, player1_maxHP = player1.outputData()
+                    playerName2, isRealPlayer2, player2_currentHP, player2_maxHP = player2.outputData()
+                    player1Class = "TBD"
+                    player2Class = "TBD"
+                    # format the data
+                    dataMessages = [[player1Class,playerName1, isRealPlayer1, player1_currentHP, player1_maxHP],
+                               [player2Class,playerName2, isRealPlayer2, player2_currentHP, player2_maxHP]]
+                    columns = ["Class Name", "Player Name", "Real Player ?", "Current HP", "Max HP"]
+
+                    df = pd.DataFrame(dataMessages, columns=columns)
+                    csv_file_path = './gamingData.csv'
+                    df.to_csv(csv_file_path, index=False)
+                    print(f"Gaming data saved to: {csv_file_path}")
+                    keep_playing = False
 
     print("Thank you for playing Battle Simulator 3000!")
 
@@ -73,7 +99,12 @@ def intro():  # not testable
 
 
 def setUpNewGame(player1: Player, player2: Player):
-    print("Please make the selection for player 1 " "\n 1 for Warrior and 2 for Mugwump" "\n Default is Warrior")
+    print("Please make the selection for player 1 " )
+    print(f"1 - {c1Name}")
+    print(f"2 - {c2Name}")
+    print(f"3 - {c3Name}")
+    print(f"4 - {c4Name}")
+    print(f"5 - {c5Name}")
     char1 = int(input())
     if char1 > 2 or char1 < 1:
         char1 = 1
@@ -81,7 +112,12 @@ def setUpNewGame(player1: Player, player2: Player):
     print("is this an actual player or AI? ""\n 1 for Real Player and 0 for AI""\n Default is Real Player")
     player1.is_player = bool(int(input()))
 
-    print("Please make the selection for player 2 " "\n 1 for Warrior and 2 for Mugwump" "\n Default is Mugwump")
+    print("Please make the selection for player 2 " )
+    print(f"1 - {c1Name}")
+    print(f"2 - {c2Name}")
+    print(f"3 - {c3Name}")
+    print(f"4 - {c4Name}")
+    print(f"5 - {c5Name}")
     char2 = int(input())
     if char2 > 2 or char2 < 1:
         char2 = 2
@@ -213,7 +249,14 @@ def victory(victor):  # not testable (or at least we won't worry about testing i
 
 def playAgain() -> bool:  # this should be testable, see https://stackoverflow.com/questions/35851323/how-to-test-a-function-with-input-call
     choice = input("Would you like to play again (yes/no)?")
-    if (str.lower(choice) == "y" or str.lower(choice) == "yes"):
+    if str.lower(choice) == "y" or str.lower(choice) == "yes":
+        return True
+    return False
+
+
+def pauseAndSave() -> bool:
+    choice = input("Would you like to pause and save the game?(yes/no)?")
+    if str.lower(choice) == "y" or str.lower(choice) == "yes":
         return True
     return False
 
