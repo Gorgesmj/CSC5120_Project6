@@ -2,6 +2,9 @@ from character import Character
 from dice import Die
 
 
+# author : Geoffrey Tan
+# Date: 7/8/2024
+
 class IronMan(Character):
     def __init__(self, isPlayer=True):
         super().__init__(isPlayer)
@@ -69,6 +72,25 @@ class IronMan(Character):
 
         super().takeDamage(final_damage)
 
+    def ai(self) -> int:  # private function to get the attack type
+        attack_type = 0
+        roll = self.d10.roll()
+
+        if roll <= 3:  # 20%
+            # hand blaster
+            attack_type = 1
+        elif roll <= 6:  # 20%
+            # use the laser
+            attack_type = 2
+
+        elif roll <= 8:  # 80%
+            # charge the suit
+            attack_type = 3
+        else:
+            # heal
+            attack_type = 4
+        return attack_type
+
 
 # test
 x = IronMan(True)
@@ -80,5 +102,5 @@ print(x.hitPoints)
 damage = x.attack()
 print(x.hitPoints)
 print(x.outputData())
-print(x.loadData("Genius",15,20))
+print(x.loadData("Genius", 15, 20))
 print(x.outputData())
