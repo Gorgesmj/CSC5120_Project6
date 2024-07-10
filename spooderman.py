@@ -64,7 +64,7 @@ class spooderman(Character):
 
     def takeDamage(self, damage: int):
         final_damage = damage
-        if self.spooderSense == 1:
+        if self.spooderSense == 1 and damage > 0:
             final_damage = final_damage // 2
 
         super().takeDamage(final_damage)
