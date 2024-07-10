@@ -67,7 +67,7 @@ class IronMan(Character):
 
     def takeDamage(self, damage: int):
         final_damage = damage
-        if self.suitCharged == 1 and damage<0:
+        if self.suitCharged == 1 :
             final_damage = final_damage // 2
 
         super().takeDamage(final_damage)
