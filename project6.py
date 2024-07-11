@@ -1,13 +1,13 @@
-# Project 6
-# Author: Geoffrey Tan, Michael Gorges, Chris Troop
-# Date:
-# group project
+# Project 4
+# Author: Geoffrey Tan
+# Date: 6/24/2024
+# Create a game Battle Sim
 
 from mugwump import Mugwump
 from warrior import Warrior
 from ironman import IronMan
-#from michaelNewChar import NewChar - MICHAEL UPDATE
-from spooderman import spooderman
+from michael_new_char import MichaelNewChar
+from chris_new_char import ChrisNewChar
 from dice import Die
 import csv
 import pandas as pd
@@ -17,14 +17,16 @@ d10 = Die(10)
 c1Name = "Mugwump"
 c2Name = "Warrior"
 c3Name = "IronMan"
-c4Name = "michaelNewChar" #MICHAEL UPDATE
-c5Name = "spooderman"
+c4Name = "michaelNewChar"
+c5Name = "chrisNewChar"
+
 
 class Player():
-    def __init__(self, char: int = 1, is_player: bool = True):
-        self.char = char
+    def __init__(self, charNum: int = 1, is_player: bool = True):
+        self.chara_choose = charNum
         self.is_player = is_player
-        self.name = None
+        self.className = None
+        self.nickName = None
 
 
 def main():  # not testable
@@ -41,64 +43,87 @@ def main():  # not testable
         # the set up function will ask the users to select which player do they want to be and which one is the ai or
         # real player
         startANewGame = newGameAsk()
+        # creating two object
+
         if startANewGame:
             setUpNewGame(player_1, player_2)
-            if player_1.char == 1:
-                player1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
-            elif player_1.char == 2:
-                player1 = IronMan(player_1.is_player)
-            #elif player_1.char == 3:
-                #player1 = michaelNewChar(player_1.is_player) MICHAEL UPDATE
-            elif player_1.char == 4:
-                player1 = spooderman(player_1.is_player)
-            else:
-                player1 = Mugwump(player_1.is_player)
-
-            if player_2.char == 1:
-                player2 = Warrior(player_2.is_player)
-            elif player_2.char == 2:
-                player2 = IronMan(player_2.is_player)
-            #elif player_2.char == 3:
-                #player2 = michaelNewChar(player_2.is_player) MICHAEL UPDATE
-            elif player_2.char == 4:
-                player2 = spooderman(player_2.is_player)
-            else:
-                player2 = Mugwump(player_2.is_player)
-            player1.setName("Please set a name for player 1: ")
-            player2.setName("Please set a name for player 2: ")
+            # print(player_1.chara_choose) # use for debug only
+            # print(player_2.chara_choose) # use for debug only
+            p1 = chooseChar(player_1)
+            p2 = chooseChar(player_2)
+            # if player_1.chara_choose == 1:
+            #     p1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
+            # else:
+            #     p1 = Mugwump(player_1.is_player)
+            #
+            # if player_2.chara_choose == 1:
+            #     p2 = Warrior(player_2.is_player)
+            # else:
+            #     p2 = Mugwump(player_2.is_player)
+            p1.setName("Please set a name for player 1: ")
+            player_1.nickName = p1.name
+            p2.setName("Please set a name for player 2: ")
+            player_1.nickName = p2.name
         else:
             print("Load data from previous game")
+            csv_file_path = './gamingData.csv'
+            loadedData = pd.read_csv(csv_file_path)
+            p1data = loadedData.iloc[0]
+            p2data = loadedData.iloc[1]
+            player_1.className = p1data.iloc[0]
+            player_1.chara_choose = p1data.iloc[1]
+            player_1.nickName = p1data.iloc[2]
+            player_1.is_player= p1data.iloc[3]
+            p1 = chooseChar(player_1)
+            p1.loadData(player_1.nickName,p1data.iloc[4], p1data.iloc[5])
+
+            player_2.className = p2data.iloc[0]
+            player_2.chara_choose = p2data.iloc[1]
+            player_2.nickName = p2data.iloc[2]
+            player_2.is_player = p2data.iloc[3]
+            p2 = chooseChar(player_2)
+            p2.loadData(player_2.nickName, p2data.iloc[4], p2data.iloc[5])
+
+
+
+
+
 
         victor = "none"
 
         while victor == "none" and keep_playing == True:
-            report(player1, player2)
-            victor = battle(player1, player2)
+            report(p1, p2)
+            victor = battle(p1, p2)
+
 
             if victor != "none":  # one of them has won
-                report(player1, player2)
+                report(p1, p2)
                 victory(victor)
                 # ask to play again
                 keep_playing = playAgain()
+
             else:
                 # ask do they want to continue play or store it as CSV
                 pauseSave = pauseAndSave()
                 if pauseSave:
                     # get the data from the class and output it as CSV
-                    playerName1, isRealPlayer1, player1_currentHP, player1_maxHP = player1.outputData()
-                    playerName2, isRealPlayer2, player2_currentHP, player2_maxHP = player2.outputData()
-                    player1Class = "TBD"
-                    player2Class = "TBD"
+                    playerName1, isRealPlayer1, player1_currentHP, player1_maxHP = p1.outputData()
+                    playerName2, isRealPlayer2, player2_currentHP, player2_maxHP = p2.outputData()
+                    player1Class = player_1.className
+                    player2Class = player_2.className
+                    player1Index = player_1.chara_choose
+                    player2Index = player_2.chara_choose
                     # format the data
-                    dataMessages = [[player1Class,playerName1, isRealPlayer1, player1_currentHP, player1_maxHP],
-                               [player2Class,playerName2, isRealPlayer2, player2_currentHP, player2_maxHP]]
-                    columns = ["Class Name", "Player Name", "Real Player ?", "Current HP", "Max HP"]
+                    dataMessages = [[player1Class, player1Index,playerName1, isRealPlayer1, player1_currentHP, player1_maxHP],
+                                    [player2Class, player2Index,playerName2, isRealPlayer2, player2_currentHP, player2_maxHP]]
+                    columns = ["Class Name","Class index","Player Name", "Real Player ?", "Current HP", "Max HP"]
 
                     df = pd.DataFrame(dataMessages, columns=columns)
                     csv_file_path = './gamingData.csv'
                     df.to_csv(csv_file_path, index=False)
                     print(f"Gaming data saved to: {csv_file_path}")
                     keep_playing = False
+
 
     print("Thank you for playing Battle Simulator 3000!")
 
@@ -108,41 +133,39 @@ def intro():  # not testable
 
     print("Welcome to Battle Simulator 4000! The world's more low tech battle simulator!"
           "You can select to be a Valiant Warrior defending your humble village from an evil Mugwump! Fight bravely, "
-          "or you can be the evil Mugwump to destroy a village"
-          "new to this version, you can play as spooderman a meme anti-hero that bullies his opponents "
+          "or you can be the evil Mugwump to destroy a village "
           "\n The warrior has a Trusty Sword, which deals decent damage, but can be tough to hit with sometimes. "
           "The warrior also has a Shield of Light, which is not as strong as your sword, but is easier to deal "
           "damage with."
-          "\n the Mugwump also has 2 damage skills as well with one additional healing skill "
-          "\n spooder man has 2 attacks, a charge up, and heal function"
+          "\n the Mugwump also have 2 damage skills as well with one additional healing skill "
           "\n this game support both PvP and PvE and EvE"
           "\nLet the epic battle begin!")
 
 
 def setUpNewGame(player1: Player, player2: Player):
-    print("Please make the selection for player 1 " )
+    print("Please make the selection for player 1 ")
     print(f"1 - {c1Name}")
     print(f"2 - {c2Name}")
     print(f"3 - {c3Name}")
     print(f"4 - {c4Name}")
     print(f"5 - {c5Name}")
     char1 = int(input())
-    if char1 > 2 or char1 < 1:
-        char1 = 1
-    player1.char = char1
+    if char1 > 5 or char1 < 1:
+        char1 = 2
+    player1.chara_choose = char1
     print("is this an actual player or AI? ""\n 1 for Real Player and 0 for AI""\n Default is Real Player")
     player1.is_player = bool(int(input()))
 
-    print("Please make the selection for player 2 " )
+    print("Please make the selection for player 2 ")
     print(f"1 - {c1Name}")
     print(f"2 - {c2Name}")
     print(f"3 - {c3Name}")
     print(f"4 - {c4Name}")
     print(f"5 - {c5Name}")
     char2 = int(input())
-    if char2 > 2 or char2 < 1:
+    if char2 > 5 or char2 < 1:
         char2 = 2
-    player2.char = char2
+    player2.chara_choose = char2
     print("is this an actual player or AI? ""\n 1 for Real Player and 0 for AI""\n Default is Player")
 
     player2.is_player = bool(int(input()))
@@ -258,7 +281,7 @@ def victory(victor):  # not testable (or at least we won't worry about testing i
     if (victor == "player1"):
         print("Player 1 win ")
     else:
-        print("Player 2 win")
+        print("Plater 2 win")
 
 
 """
@@ -281,11 +304,36 @@ def pauseAndSave() -> bool:
         return True
     return False
 
-def newGameAsk() -> bool:  # this should be testable, see https://stackoverflow.com/questions/35851323/how-to-test-a-function-with-input-call
+
+def newGameAsk() -> bool:  # this should be testable, see https://stackoverflow.com/questions/35851323/how-to-test-a
+    # -function-with-input-call
     choice = input("Do you want to start a new game (yes/no)?")
     if str.lower(choice) == "y" or str.lower(choice) == "yes":
         return True
     return False
+
+
+def chooseChar(player: Player):
+    try:
+        match player.chara_choose:
+            case 1:
+                player.className = c1Name
+                return Mugwump(player.is_player)
+            case 2:
+                player.className = c2Name
+                return Warrior(player.is_player)
+            case 3:
+                player.className = c3Name
+                return IronMan(player.is_player)
+            case 4:
+                player.className = c4Name
+                return MichaelNewChar(player.is_player)
+            case 5:
+                player.className = c5Name
+                return ChrisNewChar(player.is_player)
+    except ValueError:
+        print("Error: Invalid input. Please enter an integer.")
+
 
 if __name__ == "__main__":
     main()
