@@ -6,7 +6,7 @@
 from mugwump import Mugwump
 from warrior import Warrior
 from ironman import IronMan
-from michael_new_char import MichaelNewChar
+from throg import Throg
 from chris_new_char import ChrisNewChar
 from dice import Die
 import csv
@@ -327,7 +327,7 @@ def chooseChar(player: Player):
                 return IronMan(player.is_player)
             case 4:
                 player.className = c4Name
-                return MichaelNewChar(player.is_player)
+                return Throg(player.is_player)
             case 5:
                 player.className = c5Name
                 return ChrisNewChar(player.is_player)
