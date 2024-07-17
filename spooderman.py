@@ -71,14 +71,14 @@ class spooderman(Character):
 
 
 # test
-x = spooderman(True)
-print(f"Begin HP: {x.hitPoints}")
-x.attack()
-x.takeDamage(10)
-print(x.hitPoints)
-#
-damage = x.attack()
-print(x.hitPoints)
-print(x.outputData())
-print(x.loadData("Genius",15,20))
-print(x.outputData())
+# x = spooderman(True)
+# print(f"Begin HP: {x.hitPoints}")
+# x.attack()
+# x.takeDamage(10)
+# print(x.hitPoints)
+# #
+# damage = x.attack()
+# print(x.hitPoints)
+# print(x.outputData())
+# print(x.loadData("Genius",15,20))
+# print(x.outputData())
