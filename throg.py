@@ -1,9 +1,22 @@
+# CSC5120 Project 6
+# Author: Michael Gorges
+# Created: 7/8/2024
+# Last Updated: 7/16/2024
+# Purpose: The Frog of Thunder, a Multiverse variant of Thor. Able to use
+#           1. Hammer Attack
+#           2. Thunder Attack
+#           3. Leap (Tertiary Abilities)
+#           4. Charge Up
+#           *** Abilities 1-3 change depending on Charge which can increase from 1-4 ***
 from character import Character
 from dice import Die
 
 
 class Throg(Character):
+    """The Frog of Thunder, a Multiverse variant of Thor.
+    (Creates a Throg object)."""
     def __init__(self, isPlayer=True):
+        """Initializes Throg Character attributes."""
         super().__init__(isPlayer)
         self.name = "Throg"
         self.d10 = Die(10)
@@ -14,8 +27,9 @@ class Throg(Character):
         self.resistance = 0
 
     def attack(self):
-        if self.isPlayer:
-            if self.thunderCharge == 1:
+        """Defines attacks, abilities and how they are performed for Throg."""
+        if self.isPlayer:  # Human Player
+            if self.thunderCharge == 1:  # Starting charge attacks
                 attack1 = "Tongue Whip"
                 attack2 = "Gale Force Winds"
                 attack3 = "Leap"
@@ -30,18 +44,18 @@ class Throg(Character):
                 attack2 = "Storm Summoning"
                 attack3 = "Leap"
                 attack4 = "Mjölnir Spin"
-            elif self.thunderCharge == 4:
+            elif self.thunderCharge == 4:  # Fully charged attacks
                 attack1 = "Hammer Throw"
                 attack2 = "Weather Report"
                 attack3 = "Leap"
                 attack4 = "Mjölnir Spin"
-            print("Please select your attack type: ")
+            print("Please select your attack type: ")  # Displays attacks available
             print(f"1 for {attack1}")
             print(f"2 for {attack2}")
             print(f"3 for {attack3}")
             print(f"4 for {attack4}")
             attack_type = int(input())
-            if attack_type > 4 or attack_type < 1:
+            if attack_type > 4 or attack_type < 1:  # Sets default attack for invalid user input
                 print(f"Invalid value, set to default ({attack1})")
                 attack_type = 1
         else:
@@ -108,21 +122,23 @@ class Throg(Character):
         return damage
 
     def takeDamage(self, damage: int):
+        """Defines how Throg takes damage (May take less damage if he has resistance buff)."""
         final_damage = damage
         if self.resistance == 1:
             final_damage = final_damage // 2
             self.resistance = 0
         super().takeDamage(final_damage)
 
-    def ai(self) -> int:  # private function to get the attack type
+    def ai(self) -> int:
+        """Defines how Throg will attack based if an AI."""
         attack_type = 0
         roll = self.d10.roll()
 
-        if roll <= 3:  # 30%
+        if roll <= 3:
             attack_type = 1
-        elif roll <= 6:  # 30%
+        elif roll <= 6:
             attack_type = 2
-        elif roll <= 8:  # 20%
+        elif roll <= 8:
             attack_type = 3
         else:  # 20%
             attack_type = 4
