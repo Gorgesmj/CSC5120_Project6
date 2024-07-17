@@ -1,13 +1,14 @@
-# Project 4
-# Author: Geoffrey Tan
-# Date: 6/24/2024
-# Create a game Battle Sim
+# CSC5120 Project 6
+# Author: Geoffrey Tan, Michael Gorges, Christopher Troop
+# Created: 6/24/2024
+# Last Updated: 7/16/2024
+# Purpose: Adding Functionality to BattleSim3000 to include 3 extra classes, saving functionality & load functionality
 
 from mugwump import Mugwump
 from warrior import Warrior
 from ironman import IronMan
 from throg import Throg
-from chris_new_char import ChrisNewChar
+from spooderman import spooderman
 from dice import Die
 import csv
 import pandas as pd
@@ -17,8 +18,8 @@ d10 = Die(10)
 c1Name = "Mugwump"
 c2Name = "Warrior"
 c3Name = "IronMan"
-c4Name = "michaelNewChar"
-c5Name = "chrisNewChar"
+c4Name = "Throg"
+c5Name = "spooderman"
 
 
 class Player():
@@ -40,7 +41,7 @@ def main():  # not testable
         # change to player1 and player2, we ask the user what is what
         player_1 = Player()
         player_2 = Player()
-        # the set up function will ask the users to select which player do they want to be and which one is the ai or
+        # the setup function  will ask the users to select which player do they want to be and which one is the ai or
         # real player
         startANewGame = newGameAsk()
         # creating two object
@@ -52,7 +53,7 @@ def main():  # not testable
             p1 = chooseChar(player_1)
             p2 = chooseChar(player_2)
             # if player_1.chara_choose == 1:
-            #     p1 = Warrior(player_1.is_player)  ## player_1 .is_plaer returns the vlaue of 1 if it is a real player.
+            #     p1 = Warrior(player_1.is_player)  # player_1 .is_player returns the value of 1 if it is a real player.
             # else:
             #     p1 = Mugwump(player_1.is_player)
             #
@@ -73,9 +74,9 @@ def main():  # not testable
             player_1.className = p1data.iloc[0]
             player_1.chara_choose = p1data.iloc[1]
             player_1.nickName = p1data.iloc[2]
-            player_1.is_player= p1data.iloc[3]
+            player_1.is_player = p1data.iloc[3]
             p1 = chooseChar(player_1)
-            p1.loadData(player_1.nickName,p1data.iloc[4], p1data.iloc[5])
+            p1.loadData(player_1.nickName, p1data.iloc[4], p1data.iloc[5])
 
             player_2.className = p2data.iloc[0]
             player_2.chara_choose = p2data.iloc[1]
@@ -84,17 +85,11 @@ def main():  # not testable
             p2 = chooseChar(player_2)
             p2.loadData(player_2.nickName, p2data.iloc[4], p2data.iloc[5])
 
-
-
-
-
-
         victor = "none"
 
         while victor == "none" and keep_playing == True:
             report(p1, p2)
             victor = battle(p1, p2)
-
 
             if victor != "none":  # one of them has won
                 report(p1, p2)
@@ -123,7 +118,6 @@ def main():  # not testable
                     df.to_csv(csv_file_path, index=False)
                     print(f"Gaming data saved to: {csv_file_path}")
                     keep_playing = False
-
 
     print("Thank you for playing Battle Simulator 3000!")
 
@@ -187,7 +181,7 @@ def battle(player1, player2):  # not testable?
     if cur_inititive == 1:
         # P1 attacks and assigns the resulting damage to the P2
 
-        print(f"The Player 1 ({player1.name})attacks first!")
+        print(f"The Player 1 ({player1.name}) attacks first!")
 
         damage = player1.attack()  #calculate damage caused by P1
         if (damage > 0):
@@ -245,7 +239,7 @@ def battle(player1, player2):  # not testable?
 
 def report(p1, p2):  # not testable
     print(f"Player 1 {p1}")
-    print(f"Plater 2 {p2}")
+    print(f"Player 2 {p2}")
 
 
 """
@@ -279,9 +273,9 @@ def initiative() -> int:  # return 1 for warrior, 2 for mugwump
 
 def victory(victor):  # not testable (or at least we won't worry about testing it)
     if (victor == "player1"):
-        print("Player 1 win ")
+        print("Player 1 win")
     else:
-        print("Plater 2 win")
+        print("Player 2 win")
 
 
 """
@@ -292,14 +286,14 @@ def victory(victor):  # not testable (or at least we won't worry about testing i
 
 
 def playAgain() -> bool:  # this should be testable, see https://stackoverflow.com/questions/35851323/how-to-test-a-function-with-input-call
-    choice = input("Would you like to play again (yes/no)?")
+    choice = input("Would you like to play again (yes/no)? ")
     if str.lower(choice) == "y" or str.lower(choice) == "yes":
         return True
     return False
 
 
 def pauseAndSave() -> bool:
-    choice = input("Would you like to pause and save the game?(yes/no)?")
+    choice = input("Would you like to pause and save the game?(yes/no)? ")
     if str.lower(choice) == "y" or str.lower(choice) == "yes":
         return True
     return False
@@ -307,7 +301,7 @@ def pauseAndSave() -> bool:
 
 def newGameAsk() -> bool:  # this should be testable, see https://stackoverflow.com/questions/35851323/how-to-test-a
     # -function-with-input-call
-    choice = input("Do you want to start a new game (yes/no)?")
+    choice = input("Do you want to start a new game (yes/no)? ")
     if str.lower(choice) == "y" or str.lower(choice) == "yes":
         return True
     return False
@@ -330,7 +324,7 @@ def chooseChar(player: Player):
                 return Throg(player.is_player)
             case 5:
                 player.className = c5Name
-                return ChrisNewChar(player.is_player)
+                return spooderman(player.is_player)
     except ValueError:
         print("Error: Invalid input. Please enter an integer.")
 
